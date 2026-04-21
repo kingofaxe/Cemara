@@ -4,6 +4,29 @@
 > **Stack:** Web + Mobile (PWA/React Native) | Backend Docker | REST API  
 > **Total Fitur:** 91 fitur dari file `aplikasi_perumahan_v2.xlsx`
 
+## 🎨 DESIGN SYSTEM & UI/UX GUIDELINES (Premium Look)
+
+Untuk memastikan aplikasi terlihat profesional, modern, dan premium, pengembang wajib mengikuti panduan visual berikut:
+
+### 1. Color Palette (Modern & Trustworthy)
+- **Primary:** `#2563EB` (Royal Blue) — Untuk tombol utama, brand, dan link.
+- **Secondary:** `#64748B` (Slate) — Untuk teks pendukung dan elemen netral.
+- **Success:** `#10B981` (Emerald) — Untuk status lunas, aktif, atau berhasil.
+- **Danger:** `#EF4444` (Rose) — Untuk tunggakan, error, atau hapus data.
+- **Warning:** `#F59E0B` (Amber) — Untuk pengingat tagihan atau status pending.
+- **Background:** `#F8FAF6` — Warna dasar aplikasi yang bersih.
+
+### 2. Typography
+- **Font Utama:** `Inter` atau `Outfit` (Google Fonts).
+- **Header:** Semibold/Bold dengan tracking `-0.02em` untuk kesan modern.
+- **Body:** Regular dengan `line-height: 1.6` agar nyaman dibaca.
+
+### 3. UI Elements Style
+- **Corners:** Gunakan `border-radius: 12px` (Rounded Medium) untuk kesan ramah.
+- **Shadows:** Gunakan *Soft Shadows* (misal: `box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1)`).
+- **Cards:** Gunakan efek *Glassmorphism* tipis pada dashboard.
+- **Interactive:** Berikan efek `transition` (0.2s) pada setiap hover tombol.
+
 ---
 
 ## 📐 ARSITEKTUR SISTEM (Wajib Dibaca Dulu)

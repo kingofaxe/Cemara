@@ -1,43 +1,30 @@
 import { Elysia, t } from "elysia";
-import { db } from "./db";
-import { users } from "./db/schema";
-import { eq } from "drizzle-orm";
+import { jwt } from "@elysiajs/jwt";
+import { cors } from "@elysiajs/cors";
+import { authRoutes } from "./auth/routes";
+import { masterRoutes } from "./modules/master/routes";
+import { unitRoutes, residentRoutes } from "./modules/units/routes";
 
 const app = new Elysia()
-  .get("/ping", () => ({ status: "pong" }))
-  .group("/users", (app) =>
-    app
-      .get("/", async () => {
-        return await db.select().from(users);
-      })
-      .post("/", async ({ body }) => {
-        const [result] = await db.insert(users).values(body).$returningId();
-        return { id: result.id, ...body };
-      }, {
-        body: t.Object({
-          name: t.String(),
-          email: t.String({ format: "email" }),
-        })
-      })
-      .get("/:id", async ({ params: { id } }) => {
-        const [user] = await db.select().from(users).where(eq(users.id, Number(id)));
-        if (!user) return { error: "User not found" };
-        return user;
-      })
-      .patch("/:id", async ({ params: { id }, body }) => {
-        await db.update(users).set(body).where(eq(users.id, Number(id)));
-        return { status: "updated" };
-      }, {
-        body: t.Partial(t.Object({
-          name: t.String(),
-          email: t.String({ format: "email" }),
-        }))
-      })
-      .delete("/:id", async ({ params: { id } }) => {
-        await db.delete(users).where(eq(users.id, Number(id)));
-        return { status: "deleted" };
-      })
+  .use(cors())
+  .use(
+    jwt({
+      name: "jwt",
+      secret: process.env.JWT_SECRET!,
+    })
   )
-  .listen(3000);
+  .get("/api/health", () => ({ status: "ok", timestamp: new Date().toISOString() }))
+  .group("/api", (app) => 
+    app
+      .use(authRoutes)
+      .use(masterRoutes)
+      .use(unitRoutes)
+      .use(residentRoutes)
+  )
+  .listen(process.env.PORT || 3000);
 
-console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+);
+
+export type App = typeof app;
